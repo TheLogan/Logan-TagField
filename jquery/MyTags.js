@@ -10,6 +10,7 @@
 
 (function ($) {
     'use strict';
+    
     $.fn.handleTag = function (options) {
         var opts = $.extend({
 //            hiddenInput: 'placeTagManHere',
@@ -31,6 +32,30 @@
             "</div>" +
             "<input type='text' class='myInput' id='" + opts.inputFieldId + "' />" +
             "</div>");
+        
+        var termTemplate = "<span class='ui-autocomplete-term'>%s</span>";
+        $('#' + opts.inputFieldId).autocomplete({
+            source: ['java', 'javascript', 'asp.net'],
+            open: function (e, ui) {
+                var acData = $(this).data('ui-autocomplete');
+                var styledTerm = termTemplate.replace('%s', acData.term);
+                
+                acData
+                    .menu
+                    .element
+                    .find('li')
+                    .each(function() {
+                        var me = $(this);
+                        var keywords = acData.term.split(' ').join('|');
+                        me.html(me.text().replace(new RegExp("(" + keywords + ")", "gi"), styledTerm));
+                    });
+            },
+            close: function(event, ui){
+                $("#" + opts.inputFieldId).blur();
+//                alert("selected");
+            }
+        });
+        
         
         $("#" + opts.inputFieldId).blur(function(){
             applyTag(opts);
