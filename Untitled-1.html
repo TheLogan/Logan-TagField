@@ -17,13 +17,12 @@
             });
             
             var termTemplate = "<span class='ui-autocomplete-term'>%s</span>";
-    
+            
             $('#search').autocomplete({
                 source: ['java', 'javascript', 'asp.net'],
                 open: function (e, ui) {
-                    var acData = $(this).data('autocomplete');
+                    var acData = $(this).data('ui-autocomplete');
                     var styledTerm = termTemplate.replace('%s', acData.term);
-
                     acData
                         .menu
                         .element
