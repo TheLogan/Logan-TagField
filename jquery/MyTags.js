@@ -24,9 +24,10 @@
         //onFormSubmit
         $("#" + opts.formId).submit(function(){
             var finalString = calculateString($(".tag"));
-            $('input[id=' + opts.inputFieldId + ']').val(finalString);
+            $($hiddenInput).val(finalString);
         });
         
+        //Creates the actual field for the submit form, which is then destroyed before submission
         $hiddenInput.before("<div id='testDiv''>" +
             "<div id='insertHere'>" +
             "</div>" +
@@ -52,7 +53,6 @@
             },
             close: function(event, ui){
                 $("#" + opts.inputFieldId).blur();
-//                alert("selected");
             }
         });
         
@@ -60,6 +60,8 @@
         $("#" + opts.inputFieldId).blur(function(){
             applyTag(opts);
         });
+        
+//        $("body").on('click', '.tagDeleteButton', destroyTag($(this), opts));
         
         $("body").on('click', '.tagDeleteButton', function () {
             $(this).closest("." + opts.tagClass ).remove();
@@ -83,6 +85,11 @@
             }
         });
         return myString;
+    }
+    
+    function destroyTag(tag, opts){
+//        alert("Destruction");
+        tag.closest("." + opts.tagClass ).remove();
     }
     
     function applyTag(opts) {
