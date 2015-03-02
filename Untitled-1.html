@@ -12,49 +12,52 @@
 
     <script type="text/javascript">
         $(function() {
-            $('#placeHere').handleTag({
-                'inputFieldId' : 'testField',
-                'formId': 'myForm'
+            $('#placeTagManHere').handleTag({
+                'formId': 'myForm',
             });
             
-            $('input[name=myTex]').val("stuff");
+            var termTemplate = "<span class='ui-autocomplete-term'>%s</span>";
+    
+            $('#search').autocomplete({
+                source: ['java', 'javascript', 'asp.net'],
+                open: function (e, ui) {
+                    var acData = $(this).data('autocomplete');
+                    var styledTerm = termTemplate.replace('%s', acData.term);
+
+                    acData
+                        .menu
+                        .element
+                        .find('a')
+                        .each(function() {
+                            var me = $(this);
+                            var keywords = acData.term.split(' ').join('|');
+                            me.html(me.text().replace(new RegExp("(" + keywords + ")", "gi"), styledTerm));
+                        });
+                }
+            });
             
-            $("#myForm").submit(function(){
-                $("#testField").val()
-            })
         });
     </script>
 </head>
+<style>
+    .ui-autocomplete-term { font-weight: bold; color: blue; }
+</style>
 <body>
-    
-    <div id="placeHere" ></div>
-    
-    <input type="button" id="applyStringButton" value="submit" />
-    
-    <div class="stuff">
-        <p>here is stuff </p>
-    </div>
-    
-    
-    
 <!--
-    <form action="action_page.php" id="myForm">
-        First name:<br>
-        <input type="text" name="firstname" value="Mickey">
-        <br>
-        Last name:<br>
-        <input type="text" name="lastname" value="Mouse">
-        <br><br>
-        <input type="submit" value="Submit">
-    </form>
--->
+    <input type="button" id="applyStringButton" value="submit" />
 
     <form id="myForm">
-        <p>my form</p>
+        <input type="hidden" id = "placeTagManHere">
         <input type="text" id="testField" name="firstField" id="tagInput">
         <input type="text" name="secondfield" value="test">
         <input type="submit" value="submit" id="formButton">
     </form>
+-->
+    
+    <input id="search" />
+    
+    
+    
     
 </body>
 </html>
