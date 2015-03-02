@@ -8,43 +8,41 @@
 */
 
 
-
-(function($){
+(function ($) {
     'use strict';
-    $.fn.handleTag = function(options){
+    $.fn.handleTag = function (options) {
         
-      var opts = $.extend({
-          tagLimit: 2,
-          tagClass: 'tag',
-          inputFieldId: 'tagInput'
-      });
+        var opts = $.extend({
+            tagLimit: 2,
+            tagClass: 'tag',
+            inputFieldId: 'tagInput', //hidden field to apply value to before submitting form
+            formId: 'submitForm'
+        }, options);
+        
+        //onFormSubmit
+        $("#" + opts.formId).submit(function(){
+            var finalString = calculateString($(".tag"));
+            $('input[id=' + opts.inputFieldId + ']').val(finalString);
+        });
         
         
-        $(this).replaceWith("<div id='testDiv''>"+
+        $(this).replaceWith("<div id='testDiv''>" +
             "<div id='insertHere'>" +
-        "</div>" +
+            "</div>" +
             "<input type='text' class='myInput' id='myInputId' />" +
-        "</div>");
-//        this.css("background-color", "#333");
-        $("#myInputId").blur(applyTag)
-        $("body").on('click', '.tagDeleteButton', function(){
-            $(this).closest(".tag").remove();
+            "</div>");
+        $("#myInputId").blur(function(){
+            applyTag(opts);
         });
-
-        $("#applyStringButton").click(function(){
-            var finalString = calculateString(".tag");
-            
-            $('input[name=myTex]').val("stuff");
-//            return finalString;
-//            alert("Collect all tags to a single string, and display it here:");
+        $("body").on('click', '.tagDeleteButton', function () {
+            $(this).closest("." + opts.tagClass ).remove();
         });
-    }
+    };
     
-    function calculateString(str){
+    function calculateString(str) {
         var myString = "";
-        
         var total = str.length;
-        $(str).each(function(index, value){
+        $(str).each(function (index, value) {
             
             myString += $(value)
                 .clone()    //clone the element
@@ -53,18 +51,17 @@
                 .end()      //again go back to selected element
                 .text()
                 .trim();
-            
-            if(index < total - 1){
-               myString += ", ";
+            if (index < total - 1) {
+                myString += ", ";
             }
         });
         return myString;
     }
     
-    function applyTag(){
+    function applyTag(opts) {
         var value = $("#myInputId").val();
         $("#myInputId").val("");
-        $("#insertHere").append("<div class='tag' >" + value + " <button class='tagDeleteButton'> x </button></div>")
+        $("#insertHere").append("<div class='" + opts.tagClass + "' >" + value + " <button class='tagDeleteButton'> x </button></div>");
     }
     return this;
 }(jQuery));

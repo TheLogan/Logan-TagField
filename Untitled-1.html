@@ -12,10 +12,16 @@
 
     <script type="text/javascript">
         $(function() {
-            $('#placeHere').handleTag();
-            
+            $('#placeHere').handleTag({
+                'inputFieldId' : 'testField',
+                'formId': 'myForm'
+            });
             
             $('input[name=myTex]').val("stuff");
+            
+            $("#myForm").submit(function(){
+                $("#testField").val()
+            })
         });
     </script>
 </head>
@@ -25,11 +31,31 @@
     
     <input type="button" id="applyStringButton" value="submit" />
     
+    <div class="stuff">
+        <p>here is stuff </p>
+    </div>
     
     
-    <form>
-        <input type="text" name="myTex">
+    
+<!--
+    <form action="action_page.php" id="myForm">
+        First name:<br>
+        <input type="text" name="firstname" value="Mickey">
+        <br>
+        Last name:<br>
+        <input type="text" name="lastname" value="Mouse">
+        <br><br>
+        <input type="submit" value="Submit">
     </form>
+-->
+
+    <form id="myForm">
+        <p>my form</p>
+        <input type="text" id="testField" name="firstField" id="tagInput">
+        <input type="text" name="secondfield" value="test">
+        <input type="submit" value="submit" id="formButton">
+    </form>
+    
 </body>
 </html>
 
