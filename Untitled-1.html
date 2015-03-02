@@ -2,49 +2,34 @@
 <html>
 <head>
     <title>Tag manager</title>
-    <link rel="stylesheet" href="../jquery/style.css"/>
-    <link rel="stylesheet" href="../jquery/jquery-ui.css"/>
-    <link rel="stylesheet" href="../jquery/jquery-ui.structure.css"/>
-    <link rel="stylesheet" href="../jquery/jquery-ui.theme.css"/>
-    <script type="text/javascript" src="../jquery/jquery-2.1.3.js"></script>
-    <script type="text/javascript" src="../jquery/jquery-ui.js"></script>
-    <script type="text/javascript" src="../jquery/MyTags.js"></script>
+    <link rel="stylesheet" href="jquery/style.css"/>
+    <link rel="stylesheet" href="jquery/jquery-ui.css"/>
+    <link rel="stylesheet" href="jquery/jquery-ui.structure.css"/>
+    <link rel="stylesheet" href="jquery/jquery-ui.theme.css"/>
+    <script type="text/javascript" src="jquery/jquery-2.1.3.js"></script>
+    <script type="text/javascript" src="jquery/jquery-ui.js"></script>
+    <script type="text/javascript" src="jquery/MyTags.js"></script>
 
     <script type="text/javascript">
         $(function() {
             $('#placeHere').handleTag();
-//            $("body").doStuff();
-//            
-//            $("#myInputId").blur(applyTag)
-//            $("body").on('click', '.tagDeleteButton', function(){
-//                $(this).closest(".tag").remove();
-//                console.log('Click');
-//            });
-//            
-//            $("#applyStringButton").click(function(){
-//                alert("Collect all tags to a single string, and display it here:");
-//            });
+            
+            
+            $('input[name=myTex]').val("stuff");
         });
-        
-//        function applyTag(){
-//            var value = $("#myInputId").val();
-//            $("#myInputId").val("");
-//            $("#insertHere").append("<div class='tag' >" + value + " <button class='tagDeleteButton'> x </button></div>")
-//        }
     </script>
 </head>
 <body>
     
     <div id="placeHere" ></div>
-<!--
-    <div id="testDiv">
-        <div id="insertHere">
-        </div>
-        <input type="text" class="myInput" id="myInputId" />
-    </div>
--->
     
     <input type="button" id="applyStringButton" value="submit" />
+    
+    
+    
+    <form>
+        <input type="text" name="myTex">
+    </form>
 </body>
 </html>
 

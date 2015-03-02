@@ -1,6 +1,25 @@
+/**
+ * A plugin to add a tag field to any form
+ * It can take just a single tag or multiple tags
+ * 
+ * tagLimit (int):
+ * tagClass (string):
+ * inputFieldId (string):
+*/
+
+
+
 (function($){
     'use strict';
-    $.fn.handleTag = function(){
+    $.fn.handleTag = function(options){
+        
+      var opts = $.extend({
+          tagLimit: 2,
+          tagClass: 'tag',
+          inputFieldId: 'tagInput'
+      });
+        
+        
         $(this).replaceWith("<div id='testDiv''>"+
             "<div id='insertHere'>" +
         "</div>" +
@@ -13,10 +32,10 @@
         });
 
         $("#applyStringButton").click(function(){
-            var ssstr = calculateString(".tag");
-//            $(this).val(ssstr);
-
-//            alert(ssstr);
+            var finalString = calculateString(".tag");
+            
+            $('input[name=myTex]').val("stuff");
+//            return finalString;
 //            alert("Collect all tags to a single string, and display it here:");
         });
     }
