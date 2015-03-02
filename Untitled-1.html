@@ -13,7 +13,7 @@
     <script type="text/javascript">
         $(function() {
             $('#placeTagManHere').handleTag({
-                'formId': 'myForm',
+                'formId': 'myForm'
             });
             
             var termTemplate = "<span class='ui-autocomplete-term'>%s</span>";
@@ -23,10 +23,11 @@
                 open: function (e, ui) {
                     var acData = $(this).data('ui-autocomplete');
                     var styledTerm = termTemplate.replace('%s', acData.term);
+
                     acData
                         .menu
                         .element
-                        .find('a')
+                        .find('li')
                         .each(function() {
                             var me = $(this);
                             var keywords = acData.term.split(' ').join('|');
@@ -42,18 +43,18 @@
     .ui-autocomplete-term { font-weight: bold; color: blue; }
 </style>
 <body>
-<!--
     <input type="button" id="applyStringButton" value="submit" />
 
     <form id="myForm">
         <input type="hidden" id = "placeTagManHere">
+<!--
         <input type="text" id="testField" name="firstField" id="tagInput">
         <input type="text" name="secondfield" value="test">
+-->
         <input type="submit" value="submit" id="formButton">
     </form>
--->
     
-    <input id="search" />
+<!--    <input id="search" />-->
     
     
     

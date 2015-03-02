@@ -11,7 +11,6 @@
 (function ($) {
     'use strict';
     $.fn.handleTag = function (options) {
-        
         var opts = $.extend({
 //            hiddenInput: 'placeTagManHere',
             tagLimit: 2,
@@ -19,7 +18,6 @@
             inputFieldId: 'tagInput', //hidden field to apply value to before submitting form
             formId: 'submitForm'
         }, options);
-        
         var $hiddenInput = $(this);
         
         //onFormSubmit
@@ -31,14 +29,13 @@
         $hiddenInput.before("<div id='testDiv''>" +
             "<div id='insertHere'>" +
             "</div>" +
-            "<input type='text' class='myInput' id='myInputId' />" +
+            "<input type='text' class='myInput' id='" + opts.inputFieldId + "' />" +
             "</div>");
-        
-//        $hiddenInput.before("<p>stuff</p>");
         
         $("#" + opts.inputFieldId).blur(function(){
             applyTag(opts);
         });
+        
         $("body").on('click', '.tagDeleteButton', function () {
             $(this).closest("." + opts.tagClass ).remove();
         });
@@ -64,9 +61,41 @@
     }
     
     function applyTag(opts) {
-        var value = $("#myInputId").val();
-        $("#" +inputFieldId).val("");
-        $("#insertHere").append("<div class='" + opts.tagClass + "' >" + value + " <button class='tagDeleteButton'> x </button></div>");
+        var value = $("#" + opts.inputFieldId).val();
+        var inputField = $("#" + opts.inputFieldId);
+        if(inputField.val() != ""){
+            $("#" + opts.inputFieldId).val("");
+            $("#insertHere").append("<div class='" + opts.tagClass + "' >" + value + " <button class='tagDeleteButton'> x </button></div>");
+        }
     }
     return this;
 }(jQuery));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
