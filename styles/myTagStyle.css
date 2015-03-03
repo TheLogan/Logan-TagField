@@ -1,0 +1,20 @@
+.tag{
+    background-color: #CFD3FF;
+    border-radius: 5px;
+    padding: 5px;
+}
+.tagDeleteButton{
+    background-color: #AFB5ED;
+    border: none;
+}
+
+.ui-autocomplete-term { 
+    font-weight: bold; 
+    background-color:burlywood;
+    border-radius: 2px;
+    text-decoration: underline;
+}
+
+.ui-autocomplete{
+    background-color:blue;
+}
