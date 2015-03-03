@@ -15,12 +15,20 @@
                 'tagLimit': 3,
                 source: ['Java', 'Javascript']
             });
+            
+            $('#placeTagManTwoHere').handleTag({
+                'formId': 'myForm',
+                'tagLimit': 3,
+                source: ['Java', 'Javascript']
+            });
         });
     </script>
 </head>
 <body>
     <form id="myForm">
         <input type="hidden" id = "placeTagManHere" value="hidden">
+        <br>
+        <input type="hidden" id = "placeTagManTwoHere" value="hidden">
         <input type="submit" value="submit" id="formButton">
     </form>
 </body>

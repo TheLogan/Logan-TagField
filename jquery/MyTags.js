@@ -86,7 +86,7 @@
             $("#" + opts.inputFieldId).css("display", "initial");
         });
     };
-    
+
     function calculateString(str, opts) {
         var myString = "";
         var total = str.length;
@@ -106,7 +106,7 @@
         });
         return myString;
     }
-    
+
     function destroyTag(tag, opts){
         tag.closest("." + opts.tagClass ).remove();
     }
