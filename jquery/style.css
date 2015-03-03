@@ -1,16 +1,15 @@
+/*
 .highlighted {
-            background-color:Red;
-        }
+    background-color:Red;
+}
+*/
 
-        #testDiv, #insertHere{
-            display: flex;
-        }
-        .tag{
-            background-color: #CFD3FF;
-            border-radius: 5px;
-            padding: 5px;
-        }
-        .tagDeleteButton{
-            background-color: #AFB5ED;
-            border: none;
-        }
+.tag{
+    background-color: #CFD3FF;
+    border-radius: 5px;
+    padding: 5px;
+}
+.tagDeleteButton{
+    background-color: #AFB5ED;
+    border: none;
+}

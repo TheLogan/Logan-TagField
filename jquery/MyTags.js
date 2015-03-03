@@ -13,11 +13,11 @@
     
     $.fn.handleTag = function (options) {
         var opts = $.extend({
-//            hiddenInput: 'placeTagManHere',
             tagLimit: 2,
             tagClass: 'tag',
             inputFieldId: 'tagInput', //hidden field to apply value to before submitting form
-            formId: 'submitForm'
+            formId: 'submitForm',
+            parentDivId: 'tagManParent'
         }, options);
         var $hiddenInput = $(this);
         
@@ -25,15 +25,17 @@
         $("#" + opts.formId).submit(function(){
             var finalString = calculateString($(".tag"));
             $($hiddenInput).val(finalString);
+            $("#" + opts.parentDivId).remove();
         });
         
         //Creates the actual field for the submit form, which is then destroyed before submission
-        $hiddenInput.before("<div id='testDiv''>" +
-            "<div id='insertHere'>" +
+        $hiddenInput.before("<div id='" + opts.parentDivId + "' style='display: flex' >" +
+            "<div id='insertHere' style='display:flex'>" +
             "</div>" +
             "<input type='text' class='myInput' id='" + opts.inputFieldId + "' />" +
             "</div>");
         
+        //Autocomplete stuff
         var termTemplate = "<span class='ui-autocomplete-term'>%s</span>";
         $('#' + opts.inputFieldId).autocomplete({
             source: ['java', 'javascript', 'asp.net'],
@@ -63,8 +65,10 @@
         
 //        $("body").on('click', '.tagDeleteButton', destroyTag($(this), opts));
         
+        //Destroy tags
         $("body").on('click', '.tagDeleteButton', function () {
             $(this).closest("." + opts.tagClass ).remove();
+            $("#" + opts.inputFieldId).css("display", "initial");
         });
     };
     
@@ -97,8 +101,10 @@
         var inputField = $("#" + opts.inputFieldId);
         if(inputField.val() != ""){
             $("#" + opts.inputFieldId).val("");
-            $("#insertHere").append("<div class='" + opts.tagClass + "' >" + value + " <button class='tagDeleteButton'> x </button></div>");
+            $("#insertHere").append("<div class='" + opts.tagClass + "'>" + value + " <button class='tagDeleteButton'> x </button></div>");
         }
+        if($("." + opts.tagClass).length >= opts.tagLimit)
+            $("#" + opts.inputFieldId).css("display", "none");
     }
     return this;
 }(jQuery));

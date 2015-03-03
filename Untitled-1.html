@@ -13,7 +13,8 @@
     <script type="text/javascript">
         $(function() {
             $('#placeTagManHere').handleTag({
-                'formId': 'myForm'
+                'formId': 'myForm',
+                'tagLimit': 3
             });
         });
     </script>
@@ -22,22 +23,10 @@
     .ui-autocomplete-term { font-weight: bold; color: blue; }
 </style>
 <body>
-<!--    <input type="button" id="applyStringButton" value="submit" />-->
-
     <form id="myForm">
         <input type="hidden" id = "placeTagManHere" value="hidden">
-<!--
-        <input type="text" id="testField" name="firstField" id="tagInput">
-        <input type="text" name="secondfield" value="test">
--->
         <input type="submit" value="submit" id="formButton">
     </form>
-    
-<!--    <input id="search" />-->
-    
-    
-    
-    
 </body>
 </html>
 
