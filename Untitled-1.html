@@ -4,8 +4,6 @@
     <title>Tag manager</title>
     <link rel="stylesheet" href="styles/myTagStyle.css"/>
     <link rel="stylesheet" href="styles/jquery-ui.css"/>
-    <link rel="stylesheet" href="styles/jquery-ui.structure.css"/>
-    <link rel="stylesheet" href="styles/jquery-ui.theme.css"/>
     <script type="text/javascript" src="jquery/jquery-2.1.3.js"></script>
     <script type="text/javascript" src="jquery/jquery-ui.js"></script>
     <script type="text/javascript" src="jquery/MyTags.js"></script>
@@ -14,7 +12,8 @@
         $(function() {
             $('#placeTagManHere').handleTag({
                 'formId': 'myForm',
-                'tagLimit': 3
+                'tagLimit': 3,
+                source: ['Java', 'Javascript']
             });
         });
     </script>

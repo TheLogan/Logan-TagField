@@ -1,4 +1,4 @@
-/**
+/*
  * A plugin to add a tag field to any form
  * It can take just a single tag or multiple tags
  * 
