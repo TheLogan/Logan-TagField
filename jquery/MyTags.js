@@ -23,7 +23,7 @@
         
         //onFormSubmit
         $("#" + opts.formId).submit(function(){
-            var finalString = calculateString($(".tag"));
+            var finalString = calculateString($(".tag"), opts);
             $($hiddenInput).val(finalString);
             $("#" + opts.parentDivId).remove();
         });
@@ -72,20 +72,23 @@
         });
     };
     
-    function calculateString(str) {
+    function calculateString(str, opts) {
         var myString = "";
         var total = str.length;
         $(str).each(function (index, value) {
-            
-            myString += $(value)
-                .clone()    //clone the element
-                .children() //select all the children
-                .remove()   //remove all the children
-                .end()      //again go back to selected element
-                .text()
-                .trim();
-            if (index < total - 1) {
-                myString += ", ";
+            if(index < opts.tagLimit){
+                myString += $(value)
+                    .clone()    //clone the element
+                    .children() //select all the children
+                    .remove()   //remove all the children
+                    .end()      //again go back to selected element
+                    .text()
+                    .trim();
+                if (index < total - 1) {
+                    myString += ", ";
+                }
+            }else{
+                alert("oops!")
             }
         });
         return myString;
