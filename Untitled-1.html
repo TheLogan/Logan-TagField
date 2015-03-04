@@ -20,7 +20,14 @@
             $('#placeTagManTwoHere').handleTag({
                 'formId': 'myForm',
                 'uniqueIdentifier': 'derpty',
-                'tagLimit': 3,
+                'tagLimit': 1,
+                source: ['Java', 'Javascript']
+            });
+            
+            $('#placeTagManThreeHere').handleTag({
+                'formId': 'myForm',
+                'uniqueIdentifier': 'derptys',
+                'tagLimit': 1,
                 source: ['Java', 'Javascript']
             });
         });
@@ -31,6 +38,9 @@
         <input type="hidden" id = "placeTagManHere" value="hidden">
         <br>
         <input type="hidden" id = "placeTagManTwoHere" value="hidden">
+        <br>
+        <input type="hidden" id = "placeTagManThreeHere" value="hidden">
+        <br>
         <input type="submit" value="submit" id="formButton">
     </form>
 </body>
