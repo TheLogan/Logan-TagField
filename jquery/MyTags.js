@@ -48,7 +48,6 @@
         //onFormSubmit
         $("#" + opts.formId).submit(function(){
             var finalString = calculateString($("." + internalOpts.tagClass), opts);
-            alert(finalString);
             $($hiddenInput).val(finalString);
             $("#" + opts.parentDivId).remove();
         });
