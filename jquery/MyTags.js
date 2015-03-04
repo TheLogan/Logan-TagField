@@ -5,11 +5,11 @@
  * source (array of strings): The autocomplete array.
  * tagLimit (int): The maximum amount of tags (there's no infinite option, just set it really high if need be)
  * tagClass (string): The class applied to tags, useful for styling
- * inputFieldId (string): The ID of the input field, useful for styling etc. The field is removed upon submission so as not to be included in the form.
+ * uniqueInputFieldId (string): The ID of the input field, useful for styling etc. The field is removed upon submission so as not to be included in the form.
  * formId: (string): Used to catch form submission. This does need to be set.
  * parentDivId (string): The div containing the inputfield and the tags, will be removed upon submission, but useful for styling.
  * warnWrongTagName should the user be warned if using the wrong html tag type?
-*/
+ */
 
 
 (function ($) {
@@ -20,7 +20,7 @@
             source: [], // just like ['java', 'javascript', 'asp.net']
             tagLimit: 2,
             tagClass: 'tag',
-            inputFieldId: 'tagInput', //hidden field to apply value to before submitting form
+            uniqueInputFieldId: '', //hidden field to apply value to before submitting form
             formId: '',
             parentDivId: 'tagManParent',
             warnWrongTagName: true
@@ -32,7 +32,11 @@
         }
 
         if(opts.warnWrongTagName == true && $(this).prop("tagName") != "INPUT"){
-            console.log("LogansTagMan was not set to an input type, as was expected. If this was intended the warning can be disabled");
+            console.log("LogansTagMan was not set to an <input> type, as was expected. If this was intended the warning can be disabled");
+        }
+        
+        if(opts.uniqueInputFieldId == ''){
+            console.log("You must set a unique uniqueInputFieldId for every TagField");
         }
         
         
@@ -47,12 +51,12 @@
         $hiddenInput.before("<div id='" + opts.parentDivId + "' style='display: flex' >" +
             "<div id='insertHere' style='display:flex'>" +
             "</div>" +
-            "<input type='text' class='myInput' id='" + opts.inputFieldId + "' />" +
+            "<input type='text' class='myInput' id='" + opts.uniqueInputFieldId + "' />" +
             "</div>");
         
         //Autocomplete stuff
         var termTemplate = "<span class='ui-autocomplete-term'>%s</span>";
-        $('#' + opts.inputFieldId).autocomplete({
+        $('#' + opts.uniqueInputFieldId).autocomplete({
             source: opts.source,
             open: function (e, ui) {
                 var acData = $(this).data('ui-autocomplete');
@@ -68,25 +72,28 @@
                         me.html(me.text().replace(new RegExp("(" + keywords + ")", "gi"), styledTerm));
                     });
             },
-            close: function(event, ui){
-                $("#" + opts.inputFieldId).blur();
+            select: function(event, ui){
+                
+                applyTag(opts, ui.item.value);
+                $("#" + opts.uniqueInputFieldId).val("");
+                event.preventDefault();
+//                $("#" + opts.uniqueInputFieldId).blur();
+                
             }
         });
         
         
-        $("#" + opts.inputFieldId).blur(function(){
+        $("#" + opts.uniqueInputFieldId).blur(function(){
             applyTag(opts);
         });
-        
-//        $("body").on('click', '.tagDeleteButton', destroyTag($(this), opts));
         
         //Destroy tags
         $("body").on('click', '.tagDeleteButton', function () {
             $(this).closest("." + opts.tagClass ).remove();
-            $("#" + opts.inputFieldId).css("display", "initial");
+            $("#" + opts.uniqueInputFieldId).css("display", "initial");
         });
     };
-
+    
     function calculateString(str, opts) {
         var myString = "";
         var total = str.length;
@@ -111,15 +118,17 @@
         tag.closest("." + opts.tagClass ).remove();
     }
     
-    function applyTag(opts) {
-        var value = $("#" + opts.inputFieldId).val();
-        var inputField = $("#" + opts.inputFieldId);
-        if(inputField.val() != ""){
-            $("#" + opts.inputFieldId).val("");
-            $("#insertHere").append("<div class='" + opts.tagClass + "'>" + value + " <button class='tagDeleteButton'> x </button></div>");
+    function applyTag(opts, fieldValue) {
+        if(fieldValue == '' || fieldValue == undefined){
+            fieldValue = $("#" + opts.uniqueInputFieldId).val();
+        }
+        var inputField = $("#" + opts.uniqueInputFieldId);
+        if(fieldValue != ''){
+            $("#" + opts.uniqueInputFieldId).val("");
+            $("#insertHere").append("<div class='" + opts.tagClass + "'>" + fieldValue + " <button class='tagDeleteButton'> x </button></div>");
         }
         if($("." + opts.tagClass).length >= opts.tagLimit)
-            $("#" + opts.inputFieldId).css("display", "none");
+            $("#" + opts.uniqueInputFieldId).css("display", "none");
     }
     return this;
 }(jQuery));
