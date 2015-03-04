@@ -19,12 +19,9 @@
         var opts = $.extend({
             source: [], // just like ['java', 'javascript', 'asp.net']
             tagLimit: 2,
-            tagClass: 'tag',
-            uniqueInputFieldId: '', //hidden field to apply value to before submitting form
+            uniqueIdentifier: '', //hidden field to apply value to before submitting form
             formId: '',
-            tagDelClass: '',
             parentDivId: 'tagManParent',
-            insertTagsId: '',
             warnWrongTagName: true
         }, options);
         var $hiddenInput = $(this);
@@ -32,14 +29,20 @@
         if(opts.formId == ''){
             console.log("LogansTagMan requires to be set with a formID, without one this isn't going to work");
         }
-
+        
         if(opts.warnWrongTagName == true && $(this).prop("tagName") != "INPUT"){
             console.log("LogansTagMan was not set to an <input> type, as was expected. If this was intended the warning can be disabled");
         }
         
-        if(opts.uniqueInputFieldId == ''){
-            console.log("You must set a unique uniqueInputFieldId for every TagField");
+        if(opts.uniqueIdentifier == ''){
+            console.log("You must set a unique uniqueIdentifier for every new TagField");
         }
+        var internalOpts = new Object();
+        internalOpts.uniqueInputFieldId = "inputField" + opts.uniqueIdentifier;
+        internalOpts.insertTagsId = 'insertTagDiv' + opts.uniqueIdentifier;
+        internalOpts.tagClass = 'tagDiv' + opts.uniqueIdentifier;
+        internalOpts.tagDelClass = 'tagDelBtn' + opts.uniqueIdentifier;
+        internalOpts.tagLimit = opts.tagLimit;
         
         
         //onFormSubmit
@@ -51,14 +54,14 @@
         
         //Creates the actual field for the submit form, which is then destroyed before submission
         $hiddenInput.before("<div id='" + opts.parentDivId + "' style='display: flex' >" +
-            "<div id='" + opts.insertTagsId + "' style='display:flex'>" +
+            "<div id='" + internalOpts.insertTagsId + "' style='display:flex'>" +
             "</div>" +
-            "<input type='text' class='myInput' id='" + opts.uniqueInputFieldId + "' />" +
+            "<input type='text' class='myInput' id='" + internalOpts.uniqueInputFieldId + "' />" +
             "</div>");
         
         //Autocomplete stuff
         var termTemplate = "<span class='ui-autocomplete-term'>%s</span>";
-        $('#' + opts.uniqueInputFieldId).autocomplete({
+        $('#' + internalOpts.uniqueInputFieldId).autocomplete({
             source: opts.source,
             open: function (e, ui) {
                 var acData = $(this).data('ui-autocomplete');
@@ -75,21 +78,21 @@
                     });
             },
             select: function(event, ui){
-                applyTag(opts, ui.item.value);
-                $("#" + opts.uniqueInputFieldId).val("");
+                applyTag(internalOpts, ui.item.value);
+                $("#" + internalOpts.uniqueInputFieldId).val("");
                 event.preventDefault();
             }
         });
         
         
-        $("#" + opts.uniqueInputFieldId).blur(function(){
-            applyTag(opts);
+        $("#" + internalOpts.uniqueInputFieldId).blur(function(){
+            applyTag(internalOpts);
         });
         
         //Destroy tags
-        $("body").on('click', '.' + opts.tagDelClass, function () {
-            $(this).closest("." + opts.tagClass).remove();
-            $("#" + opts.uniqueInputFieldId).css("display", "initial");
+        $("body").on('click', '.' + internalOpts.tagDelClass, function () {
+            $(this).closest("." + internalOpts.tagClass).remove();
+            $("#" + internalOpts.uniqueInputFieldId).css("display", "initial");
         });
     };
     
@@ -113,19 +116,17 @@
         return myString;
     }
 
-    function destroyTag(tag, opts){
-        tag.closest("." + opts.tagClass ).remove();
-    }
-    
     function applyTag(opts, fieldValue) {
         if(fieldValue == '' || fieldValue == undefined){
             fieldValue = $("#" + opts.uniqueInputFieldId).val();
         }
         var inputField = $("#" + opts.uniqueInputFieldId);
+        
+        fieldValue = fieldValue.trim();
         if(fieldValue != ''){
-            $("#" + opts.uniqueInputFieldId).val("");
             $("#" + opts.insertTagsId).append("<div class='" + opts.tagClass + " tag'>" + fieldValue + " <button class='" + opts.tagDelClass + " tagDeleteButton'> x </button></div>");
         }
+        $("#" + opts.uniqueInputFieldId).val("");
         if($("." + opts.tagClass).length >= opts.tagLimit)
             $("#" + opts.uniqueInputFieldId).css("display", "none");
     }
