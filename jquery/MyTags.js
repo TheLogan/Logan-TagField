@@ -22,7 +22,9 @@
             tagClass: 'tag',
             uniqueInputFieldId: '', //hidden field to apply value to before submitting form
             formId: '',
+            tagDelClass: '',
             parentDivId: 'tagManParent',
+            insertTagsId: '',
             warnWrongTagName: true
         }, options);
         var $hiddenInput = $(this);
@@ -49,7 +51,7 @@
         
         //Creates the actual field for the submit form, which is then destroyed before submission
         $hiddenInput.before("<div id='" + opts.parentDivId + "' style='display: flex' >" +
-            "<div id='insertHere' style='display:flex'>" +
+            "<div id='" + opts.insertTagsId + "' style='display:flex'>" +
             "</div>" +
             "<input type='text' class='myInput' id='" + opts.uniqueInputFieldId + "' />" +
             "</div>");
@@ -73,12 +75,9 @@
                     });
             },
             select: function(event, ui){
-                
                 applyTag(opts, ui.item.value);
                 $("#" + opts.uniqueInputFieldId).val("");
                 event.preventDefault();
-//                $("#" + opts.uniqueInputFieldId).blur();
-                
             }
         });
         
@@ -88,8 +87,8 @@
         });
         
         //Destroy tags
-        $("body").on('click', '.tagDeleteButton', function () {
-            $(this).closest("." + opts.tagClass ).remove();
+        $("body").on('click', '.' + opts.tagDelClass, function () {
+            $(this).closest("." + opts.tagClass).remove();
             $("#" + opts.uniqueInputFieldId).css("display", "initial");
         });
     };
@@ -125,7 +124,7 @@
         var inputField = $("#" + opts.uniqueInputFieldId);
         if(fieldValue != ''){
             $("#" + opts.uniqueInputFieldId).val("");
-            $("#insertHere").append("<div class='" + opts.tagClass + "'>" + fieldValue + " <button class='tagDeleteButton'> x </button></div>");
+            $("#" + opts.insertTagsId).append("<div class='" + opts.tagClass + " tag'>" + fieldValue + " <button class='" + opts.tagDelClass + " tagDeleteButton'> x </button></div>");
         }
         if($("." + opts.tagClass).length >= opts.tagLimit)
             $("#" + opts.uniqueInputFieldId).css("display", "none");
