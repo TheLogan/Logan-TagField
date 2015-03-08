@@ -22,7 +22,8 @@
             uniqueIdentifier: '', //hidden field to apply value to before submitting form
             formId: '',
             parentDivId: 'tagManParent',
-            warnWrongTagName: true
+            warnWrongTagName: true,
+            presetValues: ''
         }, options);
         var $hiddenInput = $(this);
         
@@ -37,6 +38,8 @@
         if(opts.uniqueIdentifier == ''){
             console.log("You must set a unique uniqueIdentifier for every new TagField");
         }
+        
+        
         var internalOpts = new Object();
         internalOpts.uniqueInputFieldId = "inputField" + opts.uniqueIdentifier;
         internalOpts.insertTagsId = 'insertTagDiv' + opts.uniqueIdentifier;
@@ -94,6 +97,15 @@
             $(this).closest("." + internalOpts.tagClass).remove();
             $("#" + internalOpts.uniqueInputFieldId).css("display", "initial");
         });
+        
+        
+        if(opts.presetValues != ''){
+            var strArr = opts.presetValues.split(", ");
+            strArr.forEach(function(value, index){
+                if($("." + internalOpts.tagClass).length < opts.tagLimit)
+                applyTag(internalOpts, value);
+            });
+        }
     };
     
     function calculateString(str, opts) {
