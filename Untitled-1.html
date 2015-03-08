@@ -25,11 +25,11 @@
             });
             
             $('#placeTagManThreeHere').handleTag({
-                'formId': 'myForm',
-                'uniqueIdentifier': 'derptys',
-                'tagLimit': 1,
-                source: ['Java', 'Javascript'],
-                presetValues: "abe, gris" //limit it to max amount
+                'formId': 'myForm', //The id of the form, used for capturing the submit button. In order to parse the tags as a  string to the hidden field.
+                'uniqueIdentifier': 'derptys', //Enables the clear seperation of different TagFields on the same page.
+                'tagLimit': 1, //Limit the amount of tags
+                source: ['Java', 'Javascript'], //the sources for the autocomplete list
+                presetValues: "Monky say, monkey do" //preset values. Since the limit is set to 1, only 'Monky say' will actually be used.
             });
         });
     </script>
